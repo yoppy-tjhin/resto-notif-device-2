@@ -4,6 +4,7 @@
 #include <RFM69.h>
 
 RFM69 radio;
+uint8_t queue_num = 0;
 
 void setup_rfm() {
     // Open a serial port so we can send keystrokes to the module: 
@@ -132,17 +133,18 @@ void rfm_loop()
 
         token = strtok_r(rest, ":", &rest);
         event = token;
-        Serial.println(event);
+        Serial.print(event);
 
         token = strtok_r(rest, ":", &rest);
         value = token;
         Serial.println(value);
-        
+
+        if ( strcmp(event, "queue") == 0 ) queue_num = atoi(value);
+
         // while ((token = strtok_r(rest, ":", &rest))) {
         //     Serial.println(token);
 
-        // };
-            
+        // };           
         
         // String received_string = radio.DATA;        
         // Serial.print ("below this is printed as string:");

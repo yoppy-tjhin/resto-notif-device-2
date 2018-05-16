@@ -215,6 +215,7 @@ U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 // End of constructor list
 
+extern uint8_t queue_num;
 
 
 #define SUN	0
@@ -348,7 +349,7 @@ void draw_id_queue(int dev_id, int queue) {
     u8g2.setCursor(85, 20);
     u8g2.print("Wait:");
     u8g2.setCursor(90, 42);
-    u8g2.print(queue);
+    u8g2.print(queue_num);
 
 }
 
@@ -379,6 +380,7 @@ void timer1_int () {
     // disable it seems to make it work. the RFM sender always gets ACK form the receiver
     Timer1.detachInterrupt();
     rfm_loop();
+
     Timer1.attachInterrupt(timer1_int);
 }
 void setup(void) {
