@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/yoppy/Documents/master/arduino-1.8.2/hardware/arduino/avr/cores/arduino",
+                "/home/yoppy/Documents/master/arduino-1.8.2/libraries"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "/home/yoppy/Documents/master/arduino-1.8.2/hardware/arduino/avr/cores/arduino",
+                    "/home/yoppy/Arduino/libraries/",
+                    "/home/yoppy/Documents/master/arduino-1.8.2/libraries"
+                ]
+            },
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

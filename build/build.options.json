@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "/home/yoppy/Documents/master/arduino-1.8.2/libraries",
+  "customBuildProperties": "build.path=/media/yoppy/A60F-C936/restautant notif dev/source_code/Weather/build,build.warn_data_percentage=75,runtime.tools.avrdude.path=/home/yoppy/Documents/master/arduino-1.8.2/hardware/tools/avr,runtime.tools.arduinoOTA.path=/home/yoppy/Documents/master/arduino-1.8.2/hardware/tools/avr,runtime.tools.avr-gcc.path=/home/yoppy/Documents/master/arduino-1.8.2/hardware/tools/avr",
+  "fqbn": "arduino:avr:pro:cpu=8MHzatmega328",
+  "hardwareFolders": "/home/yoppy/Documents/master/arduino-1.8.2/hardware,/home/yoppy/.arduino15/packages",
+  "otherLibrariesFolders": "/home/yoppy/Arduino/libraries",
+  "runtime.ide.version": "10802",
+  "sketchLocation": "/media/yoppy/A60F-C936/restautant notif dev/source_code/Weather/Weather.ino",
+  "toolsFolders": "/home/yoppy/Documents/master/arduino-1.8.2/tools-builder,/home/yoppy/Documents/master/arduino-1.8.2/hardware/tools/avr,/home/yoppy/.arduino15/packages"
+}
