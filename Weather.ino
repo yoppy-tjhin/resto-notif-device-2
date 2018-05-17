@@ -43,6 +43,7 @@
 #include "wireless.h"
 #include <TimerOne.h>
 #include <EEPROM.h>
+#include <TrueRandom.h>
 
 //#ifdef U8X8_HAVE_HW_SPI
 //#include <SPI.h>
@@ -218,6 +219,7 @@ U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 extern uint8_t queue_num;
 uint8_t id;
+char oled_msg[40];
 
 #define SUN	0
 #define SUN_CLOUD  1
@@ -381,6 +383,12 @@ void timer1_int () {
     // disable it seems to make it work. the RFM sender always gets ACK form the receiver
     Timer1.detachInterrupt();
     rfm_loop();
+    
+    // if (id_rqst_flag == true) {
+    //     id_request();
+    //     id_rqst_flag = false;
+    // }
+    
 
     Timer1.attachInterrupt(timer1_int);
 }
@@ -428,15 +436,37 @@ void loop(void) {
 //   draw("That sounds like thunder.", THUNDER, 12);
 //   draw("It's stopped raining", CLOUD, 15);
 
+    strncpy(oled_msg, "Hello and welcome to my paradise jungle", 40); 
 for ( int i =0; i<100 ; i++) {
-    my_draw ("Welcome...!", id, 18);
+    my_draw (oled_msg, id, 18);
     //delay(1000);
+    //tes_itoa();
+    //id_rqst_flag = true;
+    Timer1.detachInterrupt();
+    id_request();
+    Timer1.attachInterrupt(timer1_int);
+} 
+  
 }
 
+void tes_itoa(){
+    uint16_t extra_id= TrueRandom.rand();     // used for in case more than 1 device is requesting id at the same time
+    char sendbuff[62];
+    char id_buff[10];
 
+    strcpy(sendbuff, "id_rqst:");     
+    strcat(sendbuff, itoa((int)id, id_buff, 10) );
+    Serial.println("id:");
+    Serial.println(id);
+    Serial.println(id_buff);
 
+    strcat(sendbuff, ":");
+    strcat(sendbuff, itoa((int)extra_id, id_buff, 10)) ; 
+    Serial.println("extra_id:");
+    Serial.println(extra_id);
+    Serial.println(id_buff);
 
-  
-  
+    Serial.println("sendbuffer:");
+    Serial.println(sendbuff);
+
 }
-

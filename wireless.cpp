@@ -1,11 +1,14 @@
 #include "wireless.h"
 #include <EEPROM.h>
+#include <TrueRandom.h>
+#include <string.h>
 
 #include <RFM69.h>
 
 RFM69 radio;
 uint8_t queue_num = 0;
 extern uint8_t id;
+extern char oled_msg[];
 
 void setup_rfm() {
     // Open a serial port so we can send keystrokes to the module: 
@@ -41,8 +44,33 @@ void Blink(byte PIN, int DELAY_MS)
 }
 
 
-void process_data(String data) {
+void id_request () {
+    uint16_t extra_id= TrueRandom.rand();     // used for in case more than 1 device is requesting id at the same time
+    char sendbuffer[62];
+    char temp_buff[10];
 
+    strcpy(sendbuffer, "id_rqst:");     
+    strcat(sendbuffer, itoa((int)id, temp_buff, 10) );
+    strcat(sendbuffer, ":");
+    strcat(sendbuffer, itoa((int)extra_id, temp_buff, 10)) ;        
+    
+    Serial.println(sendbuffer);
+
+    if (USEACK)
+    {
+        if (radio.sendWithRetry(TONODEID, sendbuffer, strlen(sendbuffer))) {
+            Serial.println("ACK received!");
+            strncpy(oled_msg, "ACK received! RSSI: ", 40);
+            strcat(oled_msg, itoa(radio.RSSI, temp_buff, 10) );
+                 
+        }
+        else {
+            Serial.println("no ACK received!");
+            strncpy(oled_msg, "No ACK received! RSSI:", 40);
+            strcat(oled_msg, itoa(radio.RSSI, temp_buff, 10) );
+        }
+            
+    }
 }
 
 void rfm_loop()

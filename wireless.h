@@ -54,6 +54,7 @@
 void setup_rfm();
 void Blink(byte PIN, int DELAY_MS);
 void rfm_loop();
+void id_request();
 
 
 #endif 
