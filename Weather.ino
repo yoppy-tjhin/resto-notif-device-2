@@ -42,6 +42,7 @@
 
 #include "wireless.h"
 #include <TimerOne.h>
+#include <EEPROM.h>
 
 //#ifdef U8X8_HAVE_HW_SPI
 //#include <SPI.h>
@@ -216,7 +217,7 @@ U8G2_SSD1306_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 // End of constructor list
 
 extern uint8_t queue_num;
-
+uint8_t id;
 
 #define SUN	0
 #define SUN_CLOUD  1
@@ -384,7 +385,7 @@ void timer1_int () {
     Timer1.attachInterrupt(timer1_int);
 }
 void setup(void) {
-    Serial.begin(9600);
+    Serial.begin(115200);
     /* U8g2 Project: SSD1306 Test Board */
     // pinMode(10, OUTPUT);
     // pinMode(9, OUTPUT);
@@ -396,6 +397,8 @@ void setup(void) {
 
     Timer1.initialize(5000);  // in microseconds
     Timer1.attachInterrupt(timer1_int);
+
+    id = EEPROM.read(0);
 
   /* U8g2 Project: T6963 Test Board */
   //pinMode(18, OUTPUT);
@@ -426,7 +429,7 @@ void loop(void) {
 //   draw("It's stopped raining", CLOUD, 15);
 
 for ( int i =0; i<100 ; i++) {
-    my_draw ("Welcome...!", i, 18);
+    my_draw ("Welcome...!", id, 18);
     //delay(1000);
 }
 

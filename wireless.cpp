@@ -1,10 +1,11 @@
 #include "wireless.h"
-
+#include <EEPROM.h>
 
 #include <RFM69.h>
 
 RFM69 radio;
 uint8_t queue_num = 0;
+extern uint8_t id;
 
 void setup_rfm() {
     // Open a serial port so we can send keystrokes to the module: 
@@ -125,7 +126,7 @@ void rfm_loop()
         char *rest = radio.DATA;
 
         // the format must be -->   event:value
-        //                          queue:13
+        // example:                 queue:13
         //                          id_req:254
         //                          cook:1
         char *event;
@@ -140,7 +141,15 @@ void rfm_loop()
         Serial.println(value);
 
         if ( strcmp(event, "queue") == 0 ) queue_num = atoi(value);
-
+        else if ( strcmp(event, "id_given") == 0 ) {
+            uint8_t new_id = atoi(value);
+            if ( (new_id > 0) && (new_id < 100) ) {      // for now it is limited to 99 ids
+                EEPROM.write(0, new_id);
+                id = new_id;
+            }
+            else Serial.println( "The given id is out of range" );
+        }
+        else Serial.println("command not recognized.");
         // while ((token = strtok_r(rest, ":", &rest))) {
         //     Serial.println(token);
 
